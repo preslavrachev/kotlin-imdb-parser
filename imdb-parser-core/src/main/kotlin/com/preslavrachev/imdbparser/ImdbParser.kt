@@ -1,6 +1,7 @@
 package com.preslavrachev.imdbparser
 
 import com.preslavrachev.imdbparser.model.Movie
+import com.preslavrachev.imdbparser.model.MovieRef
 import com.preslavrachev.imdbparser.model.Plot
 import org.jsoup.Jsoup
 import rx.Observable
@@ -32,12 +33,17 @@ class ImdbParser {
             val doc = Jsoup.connect(IMBD_URL_PREFIX + id + "/").get();
             val name = doc.select(".title_wrapper h1").first().text();
             val releaseData = doc.select("meta[itemprop='datePublished']").first().attr("content");
+            val relatedMovies = doc.select(".rec_item").map {
+                element ->
+                MovieRef(element.attr("data-tconst"), element.select("img").first().attr("title"))
+            }
 
             sub.onNext(
                     Movie(
                             id = id,
                             name = name,
-                            releaseDate = LocalDate.parse(releaseData, DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+                            releaseDate = LocalDate.parse(releaseData, DateTimeFormatter.ofPattern("yyyy-MM-dd")),
+                            relatedMovies = relatedMovies
                     )
             )
         }
@@ -62,8 +68,4 @@ class ImdbParser {
 
     }
 
-}
-
-fun main(args: Array<String>) {
-    println(ImdbParser().parse("tt0803096"));
 }

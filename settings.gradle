@@ -1,2 +1,3 @@
 rootProject.name = 'imdb-parser'
-
+include ':imdb-parser-core'
+include ':imdb-parser-cli'

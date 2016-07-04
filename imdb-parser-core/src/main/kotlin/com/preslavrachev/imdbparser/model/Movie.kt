@@ -10,7 +10,9 @@ data class Movie(
         val id: String,
         val name: String,
         val releaseDate: LocalDate,
-        var plot: Plot = Plot("No summary")
+        var plot: Plot = Plot("No summary"),
+        var relatedMovies : List<MovieRef>
 ) {
 //@formatter:on
+    val movieRef: MovieRef = MovieRef(id, name)
 }

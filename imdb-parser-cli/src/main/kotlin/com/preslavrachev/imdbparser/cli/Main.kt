@@ -1,7 +1,7 @@
-package com.preslavrachev.imdbparser
+package com.preslavrachev.imdbparser.cli
 
-import com.preslavrachev.imdbparser.cli.Settings
 import com.beust.jcommander.JCommander
+import com.preslavrachev.imdbparser.ImdbParser
 
 
 /**
